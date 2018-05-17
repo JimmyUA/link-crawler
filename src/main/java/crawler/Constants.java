@@ -19,7 +19,8 @@ public class Constants {
 
     public enum Values {
 
-        OUTPUT_PATH("output_path"), INPUT_PATH("input_path"), ACCOUNTS_FILE_PATH("accounts_file_path");
+        OUTPUT_PATH("output_path"), INPUT_PATH("input_path"), ACCOUNTS_FILE_PATH("accounts_file_path"),
+        CHROME_DRIVER_PATH("chrome_driver_path");
 
         private String value;
 
