@@ -12,6 +12,7 @@ public class FileSaver {
     public static void save(String html, String url) throws IOException {
 
         String additionPath = getAdditionalPath(url);
+        additionPath = additionPath.replace("/", "_");
         createDir();
         File file = new File(outputPath + additionPath + ".html");
         if (!file.exists()) {

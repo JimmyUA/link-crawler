@@ -1,5 +1,6 @@
 package crawler.walk;
 
+import crawler.WalkerException;
 import crawler.saver.FileSaver;
 import crawler.util.Account;
 import crawler.walk.driver.ChromeDriverInitializer;
@@ -18,38 +19,42 @@ import static java.lang.Thread.sleep;
 public class SeleniumWalker {
     private DriverInitializer driverInitializer;
     private WebDriver driver;
+    private int count;
 
     public SeleniumWalker(DriverInitializer driverInitializer) {
         this.driverInitializer = driverInitializer;
     }
 
     public void walkRound(Account account, List<String> urlsPortion) throws InterruptedException, IOException {
-        driver = driverInitializer.initDriver();
-        String firtsUrl = urlsPortion.get(0);
-        driver.get(firtsUrl);
-        sleep(1000);
-        logIn(account);
+        try {
+            driver = driverInitializer.initDriver();
+            String firtsUrl = urlsPortion.get(0);
+            driver.get(firtsUrl);
+            sleep(1000);
+            logIn(account);
 
-        sleep(1000);
+            sleep(1000);
 
-        String html = driver.getPageSource();
-        FileSaver.save(html, firtsUrl);
-
-        urlsPortion.stream().skip(1).forEach(url -> {
-            driver.get(url);
-            String htmll = driver.getPageSource();
-            try {
+            String html = driver.getPageSource();
+            FileSaver.save(html, firtsUrl);
+            String url;
+            for (int i = 1; i < urlsPortion.size(); i++) {
+                url = urlsPortion.get(i);
+                driver.get(url);
+                String htmll = driver.getPageSource();
                 FileSaver.save(htmll, url);
-            } catch (IOException e) {
-                e.printStackTrace();
+                count++;
             }
-        });
+
+        } catch (Exception e) {
+            throw new WalkerException(e, count);
+        }
     }
 
     private void logIn(Account account) throws InterruptedException {
-        try{
+        try {
             driver.findElement(By.xpath("//*[@id=\"join-form\"]/p[3]/a")).click();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

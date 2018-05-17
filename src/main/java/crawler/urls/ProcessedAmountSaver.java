@@ -1,5 +1,6 @@
 package crawler.urls;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,7 +16,9 @@ public class ProcessedAmountSaver {
             Workbook workbook = new XSSFWorkbook(sourceSteam);
             Sheet sheet = workbook.getSheetAt(0);
 
-            sheet.getRow(0).getCell(0).setCellValue(amount);
+            Cell firstCell = sheet.getRow(0).getCell(0);
+            int curentValue = getCurrentValue(firstCell);
+            firstCell.setCellValue(amount + curentValue);
             saveWorkBook(workbook,file);
         } catch (Exception e){
             e.printStackTrace();
@@ -29,5 +32,9 @@ public class ProcessedAmountSaver {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private static int getCurrentValue(Cell cell) {
+        return Double.valueOf(cell.getNumericCellValue()).intValue();
     }
 }
