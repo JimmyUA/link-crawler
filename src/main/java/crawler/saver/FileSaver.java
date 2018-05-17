@@ -1,13 +1,19 @@
 package crawler.saver;
 
+import crawler.Constants;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static crawler.Constants.Values.*;
+
 public class FileSaver {
 
-    private static String outputPath = "D:/link-crawler/output/";
+    private static String outputPath = OUTPUT_PATH.get();
+    private static String urlPartToReplace = "https://www.linkedin.com/in/";
+
 
     public static void save(String html, String url) throws IOException {
 
@@ -33,7 +39,7 @@ public class FileSaver {
     }
 
     private static String getAdditionalPath(String url) {
-        return url.replace("https://www.linkedin.com/in/", "");
+        return url.replace(urlPartToReplace, "");
     }
 
     private static void createDir() {

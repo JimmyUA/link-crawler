@@ -51,8 +51,4 @@ public class URLsGetter {
         result.add(currentRow.cellIterator().next().getStringCellValue());
     }
 
-    public static void main(String[] args) {
-        get("D:/link-crawler/input/sample_urls.xlsx");
-        ProcessedAmountSaver.save("D:/link-crawler/input/sample_urls.xlsx", 600);
-    }
 }

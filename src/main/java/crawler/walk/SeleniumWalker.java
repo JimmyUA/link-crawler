@@ -64,10 +64,4 @@ public class SeleniumWalker {
         driver.findElement(By.id("login-password")).sendKeys(account.getPass());
         driver.findElement(By.id("login-submit")).click();
     }
-
-    public static void main(String[] args) throws InterruptedException, IOException {
-        List<String> list = Arrays.asList("https://www.linkedin.com/in/greg-guilliams-973399b");
-        new SeleniumWalker(new ChromeDriverInitializer())
-                .walkRound(new Account("john.cramer.voip@gmail.com", "VIka_Ruban"), list);
-    }
 }

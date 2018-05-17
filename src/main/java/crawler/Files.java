@@ -1,5 +1,6 @@
 package crawler;
 
+import static crawler.Constants.Values.*;
 import crawler.accounts.AccountsGetter;
 import crawler.urls.ProcessedAmountSaver;
 import crawler.urls.URLsGetter;
@@ -12,15 +13,15 @@ import java.util.List;
 public class Files {
 
 
-       private static String filePath = "D:/link-crawler/input/sample_urls.xlsx";
-       private static String accountsFilePath = "D:/link-crawler/linkAccounts/linkAccounts.xlsx";
+       private static String inputFilePath = INPUT_PATH.get();
+       private static String accountsFilePath = ACCOUNTS_FILE_PATH.get();
 
     public static void main(String[] args) throws Exception {
 
             int count = 0;
         try {
             List<Account> accounts = AccountsGetter.get(accountsFilePath);
-            List<String> urls = URLsGetter.get(filePath);
+            List<String> urls = URLsGetter.get(inputFilePath);
 
             for (Account account : accounts
                     ) {
@@ -29,13 +30,13 @@ public class Files {
             }
         }catch (WalkerException e){
             int proceeded = e.getAmount();
-            ProcessedAmountSaver.save(filePath, count + proceeded);
+            ProcessedAmountSaver.save(inputFilePath, count + proceeded);
             throw new  RuntimeException(e);
         } catch (Exception e){
-            ProcessedAmountSaver.save(filePath, count);
+            ProcessedAmountSaver.save(inputFilePath, count);
             throw new  RuntimeException(e);
         }
-        ProcessedAmountSaver.save(filePath, count);
+        ProcessedAmountSaver.save(inputFilePath, count);
 
     }
 
