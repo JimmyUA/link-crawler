@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Constants {
 
-    private static String filePath = "/home/jimmy/link-crawler.properties";
+    private static String filePath = "D:/link-crawler/link-crawler.txt";
     private static Properties properties = new Properties();
 
     static {
