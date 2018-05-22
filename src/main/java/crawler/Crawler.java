@@ -10,11 +10,12 @@ import crawler.walk.driver.ChromeDriverInitializer;
 
 import java.util.List;
 
-public class Files {
+public class Crawler {
 
 
        private static String inputFilePath = INPUT_PATH.get();
        private static String accountsFilePath = ACCOUNTS_FILE_PATH.get();
+       private static int portion = Integer.parseInt(PORTION.get());
 
     public static void main(String[] args) throws Exception {
 
@@ -25,8 +26,8 @@ public class Files {
 
             for (Account account : accounts
                     ) {
-                new SeleniumWalker(new ChromeDriverInitializer()).walkRound(account, urls.subList(count, count + 80));
-                count += 80;
+                new SeleniumWalker(new ChromeDriverInitializer()).walkRound(account, urls.subList(count, count + portion));
+                count += portion;
             }
         }catch (WalkerException e){
             int proceeded = e.getAmount();

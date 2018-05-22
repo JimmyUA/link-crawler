@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static crawler.accounts.Loginer.logIn;
 import static java.lang.Thread.sleep;
 
 public class SeleniumWalker {
@@ -27,12 +28,11 @@ public class SeleniumWalker {
             driver = driverInitializer.initDriver();
             String firtsUrl = urlsPortion.get(0);
             driver.get(firtsUrl);
-            sleep(1000);
-            logIn(account);
+            logIn(account, driver);
 
             expandSections();
 
-            sleep(1000);
+            sleep(500);
             String html = driver.getPageSource();
             FileSaver.save(html, firtsUrl);
             String url;
@@ -40,7 +40,7 @@ public class SeleniumWalker {
                 url = urlsPortion.get(i);
                 driver.get(url);
                 expandSections();
-                sleep(1000);
+                sleep(500);
                 String htmll = driver.getPageSource();
                 FileSaver.save(htmll, url);
                 count++;
@@ -52,17 +52,19 @@ public class SeleniumWalker {
     }
 
     private void expandSections() throws InterruptedException {
-        sleep(1000);
+        sleep(200);
 
         expandField();
 
-        sleep(1000);
+        sleep(200);
 
         expandFieldByButton();
-        sleep(1000);
+        sleep(200);
         scrollDown(800);
         sleep(1000);
         expandField();
+        scrollDown(800);
+        sleep(500);
     }
 
     private void expandFieldByButton() {
@@ -106,8 +108,6 @@ public class SeleniumWalker {
             return text.equals("Show more");
         }).collect(Collectors.toList());
 
-        sleep(1000);
-
         showMores.forEach(showMore -> {
             Actions actions = new Actions(driver);
             actions.moveToElement(showMore);
@@ -128,17 +128,5 @@ public class SeleniumWalker {
         }
     }
 
-    private void logIn(Account account) throws InterruptedException {
-        try {
-            driver.findElement(By.xpath("//*[@id=\"join-form\"]/p[3]/a")).click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        sleep(1000);
-        WebElement emailField = driver.findElement(By.id("login-email"));
-        emailField.sendKeys(account.getEmail());
-        driver.findElement(By.id("login-password")).sendKeys(account.getPass());
-        driver.findElement(By.id("login-submit")).click();
-    }
 }

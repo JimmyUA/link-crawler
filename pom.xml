@@ -6,6 +6,7 @@
 
     <groupId>com.sergey.prykhodko</groupId>
     <artifactId>link-crawler</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
     <build>
         <plugins>
@@ -19,6 +20,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>urlsbysearchword</module>
+    </modules>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
